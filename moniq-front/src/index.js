@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.css'; // Vérifie que le chemin d'accès est correct
+
 import Dashboard from './Dashboard';
 import reportWebVitals from './reportWebVitals';
 
