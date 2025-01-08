@@ -5,6 +5,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import './index.css';
 import Dashboard from './Dashboard';
 import Users from './Users';
+import Query from './Query';
+import Errors from './Errors';
 
 
 // Define the router with paths and corresponding elements
@@ -16,6 +18,14 @@ const router = createBrowserRouter([
   {
     path: "/Users",
     element: <Users />,  // This component will render for /products
+  },
+  {
+    path: "/Query",
+    element: <Query/>,  // This component will render for /products
+  },
+  {
+    path: "/Errors",
+    element: <Errors />,  // This component will render for /products
   },
   
 ]);
