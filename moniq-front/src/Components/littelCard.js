@@ -26,7 +26,7 @@ function LittleCard({ title, apiEndpoint }) {
   return (
     <div className="bg-white rounded-lg p-1 w-30 h-15 flex flex-col justify-between">
       <h3 className="text-xl font-sans font-semibold">{title}</h3>
-      <p className="text-3xl text-blue-950 font-sans font-bold">
+      <p className="text-2xl text-blue-950 font-sans font-bold">
         {count !== null ? count : "Loading..."}
       </p>
     </div>

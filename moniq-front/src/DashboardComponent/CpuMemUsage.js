@@ -73,7 +73,7 @@ function CpuMemUsage() {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 5000);
+    const interval = setInterval(fetchData, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -122,6 +122,4 @@ function CpuMemUsage() {
   );
 }
 
-export default CpuMemUsage
-
-
+export default CpuMemUsage;
