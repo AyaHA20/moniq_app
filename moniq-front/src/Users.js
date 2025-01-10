@@ -3,8 +3,8 @@ import "./index.css";
 import NavBar from './Components/NavBar';
 import PageHeader from './Components/PageHeader';
 import LittleCard from './Components/littelCard';
-import Boutton from '../src/UsersComponents/Boutton';
-import Search from '../src/UsersComponents/Search';
+import UsersManage from '../src/UsersComponents/UsersManage';
+
 
 function Users() {
  // 1. Ajouter l'état pour la valeur de la barre de recherche
@@ -38,22 +38,12 @@ function Users() {
           </div>
         </div>
 
+          {/*le component usermanage*/}
+          <UsersManage/>
+          
 
-          {/* 3. Ajouter le composant Search */}
-          <div className="my-4">
-          <Search
-            placeholder="Search for users..."
-            value={search}
-            onChange={handleSearchChange}
-          />
-        </div>
 
-         {/* Ajouter le composant Button */}
-         <div className="my-4">
-          <Boutton label="Add Member" color="blue" /> {/* Bouton bleu */}
-          <Boutton label="Edit Role" color="white" /> {/* Bouton blanc */}
-        </div>
-
+        
         
         
       </div>
