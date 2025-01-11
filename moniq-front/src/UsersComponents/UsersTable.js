@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const UsersTable = () => {
   const [users, setUsers] = useState([]); // Liste complète des utilisateurs
   const [currentPage, setCurrentPage] = useState(1); // Page actuelle
-  const usersPerPage = 5; // Nombre d'utilisateurs par page
+  const usersPerPage = 4; // Nombre d'utilisateurs par page
 
   // Simulation de données (à remplacer par l'API)
   useEffect(() => {
@@ -43,8 +43,8 @@ const UsersTable = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Users</h2>
+    <div className="p-4 mb-0">
+      <h2 className="text-xl font-bold mb-2">Users</h2>
       <table className="min-w-full table-auto bg-white shadow-md rounded-lg overflow-hidden">
   <thead>
     <tr className="text-left bg-gray-100 text-gray-600">
@@ -67,7 +67,7 @@ const UsersTable = () => {
           ))}
         </tbody>
       </table>
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-between mt-2 mb-0">
         <button
           className="bg-gray-300 text-gray-700 px-4 py-2 rounded"
           onClick={prevPage}

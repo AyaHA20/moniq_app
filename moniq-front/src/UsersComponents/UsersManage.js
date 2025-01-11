@@ -13,15 +13,11 @@ function UsersManage() {
   };
 
   return (
-    <div>
+    <div className='mb-0'>
       {/* Ligne avec carrousel à gauche, et boutons à droite */}
       <div className="flex justify-between items-center mt-6 space-x-4">
         {/* Carrousel à gauche */}
-        <div className="flex space-x-2">
-          <button className="w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center  hover:bg-gray-500 hover:font-bold hover:text-black transition-all duration-300">1</button>
-          <button className="w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center  hover:bg-gray-500 hover:font-bold hover:text-black transition-all duration-300">2</button>
-          <button className="w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center  hover:bg-gray-500 hover:font-bold hover:text-black transition-all duration-300">3</button>
-        </div>
+       <div></div>
 
         {/* Boutons à droite */}
         <div className="flex space-x-4">
@@ -35,7 +31,7 @@ function UsersManage() {
       </div>
 
       {/* Ajouter un grand rectangle blanc pour le composant UsersManage */}
-      <div className="mt-1 bg-white w-full h-full flex-grow p-6 rounded-lg ">
+      <div className="mt-0 bg-white w-full h-200 flex-grow mb-0  p-6 rounded-lg ">
         <div className="my-1 flex-grow">
           {/* Autre contenu de votre composant UsersManage */}
         </div>

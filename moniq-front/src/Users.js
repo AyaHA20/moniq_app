@@ -21,7 +21,7 @@ function Users() {
       <NavBar />
       
       {/* Contenu principal à droite */}
-      <div className="bg-gray-100 w-5/6 h-full flex flex-col px-6 py-2">
+      <div className="bg-gray-200 w-5/6 h-full flex flex-col px-6 py-2">
         
         {/* Conteneur pour le PageHeader et les LittleCards */}
         <div className="flex justify-between items-start w-full">
@@ -36,10 +36,11 @@ function Users() {
             <LittleCard title="Errors/Alerts" apiEndpoint="https://your-backend-api.com/orders-count" />
             <LittleCard title="Users" apiEndpoint="https://your-backend-api.com/products-count" />
           </div>
-        </div>
+        </div >
 
           {/*le component usermanage*/}
-          <UsersManage/>
+          <div className='mb-0'><UsersManage/></div>
+           
           
 
 
