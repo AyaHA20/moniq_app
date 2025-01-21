@@ -62,7 +62,7 @@ const UsersTable = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full font-sans">
       {/* Conteneur avec alignement à droite du composant Search */}
       <div className="flex justify-between items-center space-x-4">
         {/* à gauche */}
@@ -78,7 +78,7 @@ const UsersTable = () => {
           />
         </div>
       </div>
-      <h2 className="text-xl font-bold">Users</h2>
+      <h2 className="text-xl text-gray-600 font-bold">Users</h2>
 
       {/* le tableau */}
       <table className="table-auto w-full bg-gray-100 shadow-md rounded-lg overflow-hidden">

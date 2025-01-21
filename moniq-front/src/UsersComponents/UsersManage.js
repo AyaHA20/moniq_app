@@ -87,7 +87,7 @@ function UsersManage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mt-6 space-x-4 mb-4">
+      <div className="flex justify-between items-center font-sans mt-6 space-x-4 mb-4">
         <div></div>
         <div className="flex space-x-4">
           <Boutton label="Add Member" color="blue" onClick={openAddModal} />
