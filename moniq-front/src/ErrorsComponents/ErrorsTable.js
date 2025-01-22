@@ -1,22 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 function ErrorsTable() {
-    const [errors, setErrors] = useState([
-        { id: 1, level: "Error", message: "Invalid query syntax", dateTime: "2025-01-21 10:30", action: "Retry" },
-        { id: 2, level: "Alert", message: "Slow response time", dateTime: "2025-01-21 11:00", action: "Investigate" },
-        { id: 3, level: "Error", message: "Database connection failed", dateTime: "2025-01-21 12:15", action: "Reconnect" },
-        { id: 4, level: "Alert", message: "Backup completed", dateTime: "2025-01-21 13:00", action: "Acknowledge" },
-        { id: 5, level: "Error", message: "Disk space low", dateTime: "2025-01-21 14:00", action: "Clean" },
-        { id: 6, level: "Error", message: "Unauthorized access detected", dateTime: "2025-01-21 15:00", action: "Secure" },
-        { id: 7, level: "Alert", message: "Server restarted", dateTime: "2025-01-21 16:00", action: "Acknowledge" },
-        { id: 1, level: "Error", message: "Invalid query syntax", dateTime: "2025-01-21 10:30", action: "Retry" },
-        { id: 7, level: "Alert", message: "Server restarted", dateTime: "2025-01-21 16:00", action: "Acknowledge" },
-        { id: 1, level: "Error", message: "Invalid query syntax", dateTime: "2025-01-21 10:30", action: "Retry" }
-      ]);
-    
+  const [errors, setErrors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 7;
+
+  useEffect(() => {
+    // Fonction pour récupérer les erreurs depuis le backend
+    const fetchErrors = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/errors"); // Remplacez l'URL par celle de votre backend
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des erreurs");
+        }
+        const data = await response.json();
+        setErrors(data);
+      } catch (error) {
+        console.error("Erreur :", error);
+      }
+    };
+
+    // Récupérer les données immédiatement et toutes les 5 secondes
+    fetchErrors();
+    const intervalId = setInterval(fetchErrors, 5000);
+
+    // Nettoyage lors du démontage du composant
+    return () => clearInterval(intervalId);
+  }, []);
 
   // Pagination logic
   const indexOfLastError = currentPage * rowsPerPage;
@@ -73,19 +84,16 @@ function ErrorsTable() {
         <button
           onClick={prevPage}
           disabled={currentPage === 1}
-          className={`px-4 py-2 text-white bg-gray-300 rounded ${
-            currentPage === 1 
-          }`}
+          className={`px-4 py-2 text-white bg-gray-300 rounded ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
         >
-         <FiChevronLeft />
+          <FiChevronLeft />
         </button>
-        
+
         <button
           onClick={nextPage}
           disabled={currentPage === Math.ceil(errors.length / rowsPerPage)}
           className={`px-4 py-2 text-white bg-gray-300 rounded ${
-            currentPage === Math.ceil(errors.length / rowsPerPage)
-            
+            currentPage === Math.ceil(errors.length / rowsPerPage) ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
           <FiChevronRight />
@@ -96,3 +104,4 @@ function ErrorsTable() {
 }
 
 export default ErrorsTable;
+

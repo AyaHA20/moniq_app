@@ -10,37 +10,39 @@ const LongQTable = () => {
   const [search, setSearch] = useState("");
   const [currentPageLong, setCurrentPageLong] = useState(1);
   const [currentPageInProgress, setCurrentPageInProgress] = useState(1);
-  const queriesPerPage = 5;
+  const queriesPerPage = 4;
+
+  const fetchData = async () => {
+    try {
+      const longQueriesResponse = await fetch("http://localhost:5000/api/long-queries"); // URL de l'API
+      const inProgressQueriesResponse = await fetch("http://localhost:5000/api/in-progress-queries");
+
+      if (!longQueriesResponse.ok || !inProgressQueriesResponse.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const longQueriesData = await longQueriesResponse.json();
+      const inProgressQueriesData = await inProgressQueriesResponse.json();
+
+      setLongQueries(longQueriesData);
+      setFilteredLongQueries(longQueriesData);
+      setInProgressQueries(inProgressQueriesData);
+      setFilteredInProgressQueries(inProgressQueriesData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    const simulatedLongQueries = [
-      { id: 1, executionTime: "3.2s", userId: "U001", queryText: "SELECT * FROM users WHERE age > 30" },
-      { id: 2, executionTime: "5.8s", userId: "U002", queryText: "UPDATE orders SET status = 'shipped' WHERE id = 42" },
-      { id: 3, executionTime: "4.1s", userId: "U003", queryText: "DELETE FROM logs WHERE created_at < '2024-01-01'" },
-      { id: 4, executionTime: "2.5s", userId: "U004", queryText: "SELECT * FROM orders WHERE status = 'pending'" },
-      { id: 5, executionTime: "5.8s", userId: "U002", queryText: "UPDATE orders SET status = 'shipped' WHERE id = 42" },
-      { id: 6, executionTime: "2.5s", userId: "U004", queryText: "SELECT * FROM orders WHERE status = 'pending'" },
-      { id: 7, executionTime: "5.8s", userId: "U002", queryText: "UPDATE orders SET status = 'shipped' WHERE id = 42" }
+    // Récupération initiale des données
+    fetchData();
 
-      
-      // Ajoutez plus de données si nécessaire
-    ];
-    const simulatedInProgressQueries = [
-      { id: 8, executionTime: "3.8s", userId: "U005", queryText: "INSERT INTO audit (action, timestamp) VALUES ('logout', NOW())" },
-      { id: 9, executionTime: "6.2s", userId: "U006", queryText: "SELECT * FROM products WHERE category = 'electronics'" },
-      { id: 10, executionTime: "3.8s", userId: "U005", queryText: "INSERT INTO audit (action, timestamp) VALUES ('logout', NOW())" },
-      { id: 11, executionTime: "6.2s", userId: "U006", queryText: "SELECT * FROM products WHERE category = 'electronics'" },
-      { id: 12, executionTime: "3.8s", userId: "U005", queryText: "INSERT INTO audit (action, timestamp) VALUES ('logout', NOW())" },
-      { id: 13, executionTime: "6.2s", userId: "U006", queryText: "SELECT * FROM products WHERE category = 'electronics'" },
-      { id: 6, executionTime: "2.5s", userId: "U004", queryText: "SELECT * FROM orders WHERE status = 'pending'" },
-      { id: 7, executionTime: "5.8s", userId: "U002", queryText: "UPDATE orders SET status = 'shipped' WHERE id = 42" }
-      // Ajoutez plus de données si nécessaire
-    ];
+    // Mise à jour des données toutes les 5 secondes
+    const interval = setInterval(() => {
+      fetchData();
+    }, 5000);
 
-    setLongQueries(simulatedLongQueries);
-    setFilteredLongQueries(simulatedLongQueries);
-    setInProgressQueries(simulatedInProgressQueries);
-    setFilteredInProgressQueries(simulatedInProgressQueries);
+    return () => clearInterval(interval); // Nettoyage de l'intervalle
   }, []);
 
   useEffect(() => {
@@ -88,10 +90,10 @@ const LongQTable = () => {
   };
 
   return (
-    <div className="w-full font-sans">
-      <div className="flex justify-between items-center mb-4">
+    <div className="w-full font-sans mt-2">
+      <div className="flex justify-between items-center mb-0">
         <h2 className="text-xl font-sans text-gray-600 font-bold">Queries Tables</h2>
-        <Search placeholder="Search for queries..." value={search} onChange={(e) => setSearch(e.target.value)} />
+        <Search placeholder="Search by user or text..." value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
 
       <div className="flex justify-between font-sans items-center mb-4">
@@ -99,10 +101,10 @@ const LongQTable = () => {
         <h2 className="text-xl font-bold text-gray-600">Queries In Progress</h2>
       </div>
 
-      <div className="flex justify-between items-start gap-x-6">
+      <div className="flex justify-between items-start gap-x-6 mb-0">
         {/* Long Queries Table */}
-        <div className="w-1/2">
-          <table className="table-auto bg-gray-100 shadow-md rounded-lg overflow-hidden mb-6 w-full">
+        <div className="w-1/2 mb-0">
+          <table className="table-auto bg-gray-100 shadow-md rounded-lg overflow-hidden mb-2 w-full">
             <thead className="bg-white text-gray-600 text-xs font-bold">
               <tr>
                 <th className="px-2 py-2 uppercase tracking-wider w-1/4">Execution Time</th>
@@ -129,7 +131,7 @@ const LongQTable = () => {
             </tbody>
           </table>
           {/* Pagination Controls */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mb-0">
             <button
               className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
               onClick={() => prevPage(setCurrentPageLong, currentPageLong)}
@@ -148,8 +150,8 @@ const LongQTable = () => {
         </div>
 
         {/* Queries In Progress Table */}
-        <div className="w-1/2">
-          <table className="table-auto bg-gray-100 shadow-md rounded-lg overflow-hidden mb-6 w-full">
+        <div className="w-1/2 mb-0">
+          <table className="table-auto bg-gray-100 shadow-md rounded-lg overflow-hidden mb-2 w-full">
             <thead className="bg-white text-gray-600 text-xs font-bold">
               <tr>
                 <th className="px-2 py-2 uppercase tracking-wider w-1/4">Execution Time</th>

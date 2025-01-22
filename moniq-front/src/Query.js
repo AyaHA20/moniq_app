@@ -30,7 +30,8 @@ function Query() {
             <LittleCard title="Users" apiEndpoint="https://your-backend-api.com/products-count" />
           </div>
         </div>
-        <QueryManage/>
+        <div className='mt-2'> <QueryManage/></div>
+        
 
         
         
