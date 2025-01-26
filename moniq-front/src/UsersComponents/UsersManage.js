@@ -15,7 +15,8 @@ function UsersManage() {
   // Fonction pour récupérer les données du back-end
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("https://your-api-endpoint.com/users");
+      const response = await axios.get("http://localhost:3000/api/users");
+      console.log(response);
       setUsers(response.data); // Met à jour les utilisateurs
     } catch (error) {
       console.error("Erreur lors de la récupération des utilisateurs:", error);
@@ -53,36 +54,14 @@ function UsersManage() {
     setRole("");
   };
 
-  // Mettre à jour le rôle de l'utilisateur
+  // Mettre à jour le rôle de l'utilisateur (non implémenté pour l'instant)
   const handleSaveEdit = async () => {
-    if (role !== "admin" && role !== "user") {
-      setError("Role must be either 'admin' or 'user'.");
-      return;
-    }
-
-    try {
-      await axios.put(`https://your-api-endpoint.com/users/${userId}`, { role });
-      closeEditModal(); // Ferme la modale après succès
-      fetchUsers(); // Récupère les utilisateurs mis à jour
-    } catch (error) {
-      console.error("Erreur lors de la mise à jour du rôle:", error);
-    }
+    console.log("Edit role functionality not implemented yet.");
   };
 
-  // Ajouter un utilisateur
+  // Ajouter un utilisateur (non implémenté pour l'instant)
   const handleSaveAdd = async () => {
-    if (!name || (role !== "admin" && role !== "user")) {
-      setError("Name and role must be valid.");
-      return;
-    }
-
-    try {
-      await axios.post("https://your-api-endpoint.com/users", { name, role });
-      closeAddModal(); // Ferme la modale après succès
-      fetchUsers(); // Récupère les utilisateurs mis à jour
-    } catch (error) {
-      console.error("Erreur lors de l'ajout de l'utilisateur:", error);
-    }
+    console.log("Add user functionality not implemented yet.");
   };
 
   return (
@@ -197,4 +176,3 @@ function UsersManage() {
 }
 
 export default UsersManage;
-

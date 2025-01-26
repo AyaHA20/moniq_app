@@ -8,7 +8,7 @@ function NavBar() {
   const location = useLocation(); // Obtenez l'URL actuelle
 
   return (
-    <div className="bg-white h-full w-1/6 flex flex-col items-center px-6 justify-center">
+    <div className="bg-white h-full lg:w-1/6 flex flex-col items-center px-6 justify-center">
       {/* Titre MoniQ */}
       <a className="flex items-center cursor-pointer mb-4">
         <img src={logo} alt="thelogo" className="w-14 h-14" />
@@ -39,3 +39,6 @@ function NavBar() {
 }
 
 export default NavBar;
+
+
+

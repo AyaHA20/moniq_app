@@ -4,13 +4,13 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 function ErrorsTable() {
   const [errors, setErrors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 7;
+  const rowsPerPage = 3;
 
   useEffect(() => {
     // Fonction pour récupérer les erreurs depuis le backend
     const fetchErrors = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/errors"); // Remplacez l'URL par celle de votre backend
+        const response = await fetch("http://localhost:3000/api/errors"); // Utilisez la route existante
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des erreurs");
         }
@@ -54,24 +54,20 @@ function ErrorsTable() {
           <tr>
             <th className="px-4 py-2 uppercase tracking-wider">Level</th>
             <th className="px-4 py-2 uppercase tracking-wider">Message</th>
-            <th className="px-4 py-2 uppercase tracking-wider">Date/Time</th>
-            <th className="px-4 py-2 uppercase tracking-wider">Action</th>
+            <th className="px-4 py-2 uppercase tracking-wider">Date</th>
           </tr>
         </thead>
         <tbody>
-          {currentErrors.map((error) => (
-            <tr key={error.id} className="text-center text-sm border-t border-gray-300 hover:bg-gray-50">
-              <td className="px-4 py-3">{error.level}</td>
-              <td className="px-4 py-3">{error.message}</td>
-              <td className="px-4 py-3">{error.dateTime}</td>
-              <td className="px-4 py-3">
-                <button className="text-blue-600 hover:underline">{error.action}</button>
-              </td>
+          {currentErrors.map((error, index) => (
+            <tr key={index} className="text-center text-sm border-t border-gray-300 hover:bg-gray-50">
+              <td className="px-4 py-3">{error.Level}</td>
+              <td className="px-4 py-3">{error.Message}</td>
+              <td className="px-4 py-3">{error.Date}</td>
             </tr>
           ))}
           {currentErrors.length === 0 && (
             <tr>
-              <td colSpan="4" className="text-center py-3 text-gray-500">
+              <td colSpan="3" className="text-center py-3 text-gray-500">
                 No errors found
               </td>
             </tr>
@@ -84,7 +80,9 @@ function ErrorsTable() {
         <button
           onClick={prevPage}
           disabled={currentPage === 1}
-          className={`px-4 py-2 text-white bg-gray-300 rounded ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`px-4 py-2 text-white bg-gray-300 rounded ${
+            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
           <FiChevronLeft />
         </button>
@@ -104,4 +102,3 @@ function ErrorsTable() {
 }
 
 export default ErrorsTable;
-

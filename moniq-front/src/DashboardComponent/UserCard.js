@@ -10,50 +10,58 @@ const UserCard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/user-data'); // URL du backend
+        // Appel à l'API pour récupérer les données des utilisateurs
+        const response = await fetch('http://localhost:3000/api/user-counts');
         const result = await response.json();
-        setData(result);
+
+        // Mise à jour de l'état avec les données reçues
+        setData({
+          admins: result.adminCount,
+          users: result.userCount,
+        });
       } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
       }
     };
 
     fetchData(); // Appel initial pour récupérer les données
-
     const interval = setInterval(fetchData, 5000); // Rafraîchir toutes les 5 secondes
-
     return () => clearInterval(interval); // Nettoyer l'intervalle au démontage
   }, []);
 
+  // Préparer les données pour le graphique
   const chartData = {
     labels: ['Utilisateurs'],
     datasets: [
       {
         label: 'Admin',
         data: [data.admins],
-        backgroundColor: '#20195F',
+        backgroundColor: '#20195F', // Couleur pour les admins
       },
       {
         label: 'User',
         data: [data.users],
-        backgroundColor: '#A5B4FC',
+        backgroundColor: '#A5B4FC', // Couleur pour les utilisateurs
       },
     ],
   };
 
+  // Options du graphique
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { position: 'top' },
+      legend: { position: 'top' }, // Position de la légende
     },
     scales: {
-      x: { stacked: true },
+      x: { stacked: true }, // Barres empilées sur l'axe X
       y: {
-        stacked: true,
-        min: 0, // Début de l'axe y à 0
-        max: 100, // Fin de l'axe y à 100
-        stepSize: 20, // Pas de 20
+        stacked: true, // Barres empilées sur l'axe Y
+        min: 0, // Début de l'axe Y à 0
+        max: 5, // Fin de l'axe Y à 5
+        ticks: {
+          stepSize: 1, // Pas de 1
+        },
       },
     },
   };
@@ -67,4 +75,3 @@ const UserCard = () => {
 };
 
 export default UserCard;
-

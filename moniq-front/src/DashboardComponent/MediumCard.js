@@ -38,34 +38,41 @@ const MediumCard = ({ type }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/usage'); // Exemple d'URL pour récupérer les données
+        // Appel à l'API pour récupérer les données d'utilisation du système
+        const response = await fetch('http://localhost:3000/api/system-usage');
         const data = await response.json();
-        if (type === 'CPU') setUsage(data.cpuUsage);
-        else if (type === 'Mem') setUsage(data.memUsage);
+
+        // Extraction des valeurs numériques de CPU et mémoire
+        const cpuUsage = parseFloat(data.cpuUsage); // "12.34%" -> 12.34
+        const memoryUsage = parseFloat(data.memoryUsage); // "45.23%" -> 45.23
+
+        // Mise à jour de l'état en fonction du type (CPU ou Mem)
+        if (type === 'CPU') setUsage(cpuUsage);
+        else if (type === 'Mem') setUsage(memoryUsage);
       } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
       }
     };
 
-    fetchData();
+    fetchData(); // Premier appel
     const interval = setInterval(fetchData, 5000); // Mise à jour toutes les 5 secondes
-    return () => clearInterval(interval);
+    return () => clearInterval(interval); // Nettoie l'intervalle lors du démontage du composant
   }, [type]);
 
   return (
-    <div className="bg-white rounded-lg w-[230px] h-[130px] p-2 flex flex-col  ">
+    <div className="bg-white rounded-lg w-[230px] h-[130px] p-2 flex flex-col">
       {/* Titre et usage en temps réel */}
-      <div className="flex justify-between mb-[1px]"> {/* Réduit la marge en bas */}
+      <div className="flex justify-between mb-[1px]">
         <div className="flex flex-col">
-          <span className="text-sm font-bold font-sans text-black  mt-[1px]">{type}</span> {/* Réduit la marge en haut */}
-          <span className="text-xs text-gray-500 mt-[1px]">{usage}% using</span> {/* Petite marge */}
+          <span className="text-sm font-bold font-sans text-black mt-[1px]">{type}</span>
+          <span className="text-xs text-gray-500 mt-[1px]">{usage}% using</span>
         </div>
       </div>
 
       {/* Contenu principal de la carte */}
       <div className="flex items-center justify-between">
         {/* Conteneur des carrés colorés */}
-        <div className="flex flex-col space-y-[1px]"> {/* Réduit l'espacement entre les carrés */}
+        <div className="flex flex-col space-y-[1px]">
           <div className="flex items-center">
             <div className="h-4 w-4 bg-red-500 rounded mr-2"></div>
             <span className="text-sm">{'<= 80%'}</span>
@@ -89,4 +96,4 @@ const MediumCard = ({ type }) => {
   );
 };
 
-export default MediumCard; 
+export default MediumCard;

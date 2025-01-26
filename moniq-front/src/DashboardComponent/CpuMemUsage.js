@@ -47,17 +47,25 @@ function CpuMemUsage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://your-backend-api.com/usage");
+        // Appel à l'API pour récupérer les données d'utilisation du système
+        const response = await fetch("http://localhost:3000/api/system-usage");
         const result = await response.json();
+        console.log(result);
+        // Extraction des valeurs numériques de CPU et mémoire
+        const cpuUsage = parseFloat(result.cpuUsage); // "12.34%" -> 12.34
+        const memoryUsage = parseFloat(result.memoryUsage); // "45.23%" -> 45.23
+
+        // Heure actuelle pour l'axe X
         const currentTime = new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
         });
 
+        // Mise à jour des données du graphique
         setData((prevData) => {
-          const updatedLabels = [...prevData.labels, currentTime].slice(-10);
-          const updatedCpuData = [...prevData.datasets[0].data, result.cpu].slice(-10);
-          const updatedMemData = [...prevData.datasets[1].data, result.mem].slice(-10);
+          const updatedLabels = [...prevData.labels, currentTime].slice(-10); // Garde les 10 dernières entrées
+          const updatedCpuData = [...prevData.datasets[0].data, cpuUsage].slice(-10);
+          const updatedMemData = [...prevData.datasets[1].data, memoryUsage].slice(-10);
 
           return {
             labels: updatedLabels,
@@ -72,13 +80,13 @@ function CpuMemUsage() {
       }
     };
 
-    fetchData();
-    const interval = setInterval(fetchData, 60000);
-    return () => clearInterval(interval);
+    fetchData(); // Premier appel
+    const interval = setInterval(fetchData, 60000); // Rafraîchit toutes les 60 secondes
+    return () => clearInterval(interval); // Nettoie l'intervalle lors du démontage du composant
   }, []);
 
   return (
-    <div className="bg-white rounded-lg   p-6 h-[200px] w-full overflow-hidden">
+    <div className="bg-white rounded-lg p-6 h-[200px] w-full overflow-hidden">
       <h2 className="text-lg font-bold font-sans text-black mb-0">
         Mem and CPU Usage by Time
       </h2>

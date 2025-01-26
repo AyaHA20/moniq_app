@@ -23,11 +23,11 @@ function Query() {
             <PageHeader pageName="Querry" />
           </div>
           
-          {/* Conteneur pour les cartes */}
-          <div className="flex space-x-6 mt-3">
-            <LittleCard title="Data Base" apiEndpoint="https://your-backend-api.com/users-count" />
-            <LittleCard title="Errors/Alerts" apiEndpoint="https://your-backend-api.com/orders-count" />
-            <LittleCard title="Users" apiEndpoint="https://your-backend-api.com/products-count" />
+         {/* Conteneur pour les cartes */}
+         <div className="flex space-x-6 mt-3">
+            <LittleCard title="Data Base" apiEndpoint="http://localhost:3000/api/system-state" />
+            <LittleCard title="Errors/Alerts" apiEndpoint="http://localhost:3000/api/system-state" />
+            <LittleCard title="Users" apiEndpoint="http://localhost:3000/api/system-state" />
           </div>
         </div>
         <div className='mt-2'> <QueryManage/></div>

@@ -7,9 +7,23 @@ function LittleCard({ title, apiEndpoint }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(apiEndpoint); // Remplacez par votre API
+        const response = await fetch(apiEndpoint);
         const data = await response.json();
-        setCount(data.count); // Assurez-vous que le backend retourne un objet avec la clé 'count'
+
+        // Adapter en fonction de la route appelée
+        switch (title) {
+          case "Data Base":
+            setCount(data.databaseCount); // Utilise databaseCount
+            break;
+          case "Errors/Alerts":
+            setCount(data.errorCount + data.warningCount); // Utilise errorCount et warningCount
+            break;
+          case "Users":
+            setCount(data.userCount); // Utilise userCount
+            break;
+          default:
+            console.error("Titre de carte non reconnu :", title);
+        }
       } catch (error) {
         console.error("Erreur lors de la récupération des données:", error);
       }
@@ -21,12 +35,26 @@ function LittleCard({ title, apiEndpoint }) {
 
     // Nettoyer l'intervalle lors du démontage du composant
     return () => clearInterval(intervalId);
-  }, [apiEndpoint]);
+  }, [apiEndpoint, title]);
 
   return (
-    <div className="bg-white rounded-lg p-1 w-30 h-15 flex flex-col justify-between">
-      <h3 className="text-xl font-sans font-semibold">{title}</h3>
-      <p className="text-2xl text-blue-950 font-sans font-bold">
+    <div
+      style={{
+        width: "120px", // Largeur encore plus petite
+        height: "60px", // Hauteur encore plus petite
+        backgroundColor: "white", // Fond blanc
+        borderRadius: "6px", // Coins arrondis légèrement réduits
+        padding: "8px", // Espace interne réduit
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between", // Espacement entre le titre et le compteur
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Ombre légère
+      }}
+    >
+      <h3 style={{ fontSize: "16px", fontWeight: "600", fontFamily: "sans-serif", margin: "0 0 2px 0" }}>
+        {title}
+      </h3>
+      <p style={{ fontSize: "18px", color: "#1a365d", fontWeight: "700", fontFamily: "sans-serif", margin: 0 }}>
         {count !== null ? count : "Loading..."}
       </p>
     </div>

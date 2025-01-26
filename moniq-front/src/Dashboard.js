@@ -16,7 +16,6 @@ function Dashboard() {
       
       {/* Contenu principal à droite */}
       <div className="bg-gray-200 w-5/6 h-full flex flex-col px-6 py-2">
-     
         {/* Conteneur pour le PageHeader et les LittleCards */}
         <div className="flex justify-between items-start w-full">
           {/* PageHeader */}
@@ -26,9 +25,9 @@ function Dashboard() {
           
           {/* Conteneur pour les cartes */}
           <div className="flex space-x-6 mt-3">
-            <LittleCard title="Data Base" apiEndpoint="https://your-backend-api.com/users-count" />
-            <LittleCard title="Errors/Alerts" apiEndpoint="https://your-backend-api.com/orders-count" />
-            <LittleCard title="Users" apiEndpoint="https://your-backend-api.com/products-count" />
+            <LittleCard title="Data Base" apiEndpoint="http://localhost:3000/api/system-state" />
+            <LittleCard title="Errors/Alerts" apiEndpoint="http://localhost:3000/api/system-state" />
+            <LittleCard title="Users" apiEndpoint="http://localhost:3000/api/system-state" />
           </div>
         </div>
 
